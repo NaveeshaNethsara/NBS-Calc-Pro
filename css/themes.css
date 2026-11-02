@@ -1,0 +1,201 @@
+/**
+ * Theme Definitions for Modern Calculator
+ * Supports: Dark Slate, Swiss Light, Cyberpunk Neon, Retro Braun
+ */
+
+:root, [data-theme="dark-slate"] {
+  --bg-app: #0b0f19;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b0f19 75%);
+  --surface-card: rgba(17, 24, 39, 0.85);
+  --surface-card-border: rgba(255, 255, 255, 0.08);
+  --surface-display: #070a10;
+  --surface-display-border: rgba(255, 255, 255, 0.06);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --btn-num-bg: rgba(30, 41, 59, 0.7);
+  --btn-num-hover: rgba(51, 65, 85, 0.8);
+  --btn-num-active: rgba(71, 85, 105, 0.9);
+  --btn-num-text: #f1f5f9;
+
+  --btn-op-bg: rgba(37, 99, 235, 0.15);
+  --btn-op-hover: rgba(37, 99, 235, 0.25);
+  --btn-op-active: rgba(37, 99, 235, 0.35);
+  --btn-op-text: #38bdf8;
+  --btn-op-border: rgba(56, 189, 248, 0.2);
+
+  --btn-fn-bg: rgba(15, 23, 42, 0.6);
+  --btn-fn-hover: rgba(30, 41, 59, 0.8);
+  --btn-fn-active: rgba(51, 65, 85, 0.9);
+  --btn-fn-text: #cbd5e1;
+
+  --btn-danger-bg: rgba(220, 38, 38, 0.15);
+  --btn-danger-hover: rgba(220, 38, 38, 0.25);
+  --btn-danger-text: #f87171;
+
+  --btn-equals-bg: linear-gradient(135deg, #2563eb, #1d4ed8);
+  --btn-equals-hover: linear-gradient(135deg, #3b82f6, #2563eb);
+  --btn-equals-active: #1e40af;
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+
+  --accent-color: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.25);
+  --badge-bg: rgba(56, 189, 248, 0.12);
+  --badge-text: #38bdf8;
+
+  --drawer-bg: #0f172a;
+  --drawer-border: #1e293b;
+  --input-bg: #111827;
+  --input-border: #374151;
+}
+
+[data-theme="swiss-light"] {
+  --bg-app: #f1f5f9;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #ffffff 0%, #f1f5f9 100%);
+  --surface-card: #ffffff;
+  --surface-card-border: #e2e8f0;
+  --surface-display: #f8fafc;
+  --surface-display-border: #e2e8f0;
+
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #94a3b8;
+
+  --btn-num-bg: #f8fafc;
+  --btn-num-hover: #e2e8f0;
+  --btn-num-active: #cbd5e1;
+  --btn-num-text: #0f172a;
+
+  --btn-op-bg: #eff6ff;
+  --btn-op-hover: #dbeafe;
+  --btn-op-active: #bfdbfe;
+  --btn-op-text: #1d4ed8;
+  --btn-op-border: #bfdbfe;
+
+  --btn-fn-bg: #f1f5f9;
+  --btn-fn-hover: #e2e8f0;
+  --btn-fn-active: #cbd5e1;
+  --btn-fn-text: #334155;
+
+  --btn-danger-bg: #fef2f2;
+  --btn-danger-hover: #fee2e2;
+  --btn-danger-text: #dc2626;
+
+  --btn-equals-bg: linear-gradient(135deg, #0f172a, #1e293b);
+  --btn-equals-hover: linear-gradient(135deg, #1e293b, #334155);
+  --btn-equals-active: #020617;
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+
+  --accent-color: #2563eb;
+  --accent-glow: rgba(37, 99, 235, 0.15);
+  --badge-bg: #e0f2fe;
+  --badge-text: #0284c7;
+
+  --drawer-bg: #ffffff;
+  --drawer-border: #e2e8f0;
+  --input-bg: #f8fafc;
+  --input-border: #cbd5e1;
+}
+
+[data-theme="cyberpunk-neon"] {
+  --bg-app: #05050a;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #1a0b2e 0%, #05050a 80%);
+  --surface-card: rgba(15, 10, 25, 0.9);
+  --surface-card-border: rgba(244, 63, 94, 0.25);
+  --surface-display: #080312;
+  --surface-display-border: rgba(6, 182, 212, 0.3);
+
+  --text-main: #f0fdfa;
+  --text-muted: #2dd4bf;
+  --text-dim: #a78bfa;
+
+  --btn-num-bg: rgba(23, 14, 38, 0.7);
+  --btn-num-hover: rgba(45, 25, 75, 0.9);
+  --btn-num-active: rgba(70, 35, 115, 1);
+  --btn-num-text: #f5f3ff;
+
+  --btn-op-bg: rgba(6, 182, 212, 0.15);
+  --btn-op-hover: rgba(6, 182, 212, 0.3);
+  --btn-op-active: rgba(6, 182, 212, 0.45);
+  --btn-op-text: #22d3ee;
+  --btn-op-border: rgba(6, 182, 212, 0.4);
+
+  --btn-fn-bg: rgba(30, 20, 50, 0.6);
+  --btn-fn-hover: rgba(50, 30, 80, 0.8);
+  --btn-fn-active: rgba(80, 45, 130, 1);
+  --btn-fn-text: #e879f9;
+
+  --btn-danger-bg: rgba(244, 63, 94, 0.2);
+  --btn-danger-hover: rgba(244, 63, 94, 0.35);
+  --btn-danger-text: #fb7185;
+
+  --btn-equals-bg: linear-gradient(135deg, #f43f5e, #e11d48);
+  --btn-equals-hover: linear-gradient(135deg, #fb7185, #f43f5e);
+  --btn-equals-active: #be123c;
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 0 20px rgba(244, 63, 94, 0.6);
+
+  --accent-color: #06b6d4;
+  --accent-glow: rgba(6, 182, 212, 0.4);
+  --badge-bg: rgba(244, 63, 94, 0.2);
+  --badge-text: #f43f5e;
+
+  --drawer-bg: #0d0718;
+  --drawer-border: rgba(244, 63, 94, 0.3);
+  --input-bg: #140b24;
+  --input-border: #4c1d95;
+}
+
+[data-theme="retro-classic"] {
+  --bg-app: #cdc7bd;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #ded9ce 0%, #cdc7bd 100%);
+  --surface-card: #dfdad0;
+  --surface-card-border: #bab3a5;
+  --surface-display: #3a3835;
+  --surface-display-border: #2b2927;
+
+  --text-main: #2b2825;
+  --text-muted: #85df85; /* retro LCD green */
+  --text-dim: #78746c;
+
+  --btn-num-bg: #f4f1eb;
+  --btn-num-hover: #e5e0d6;
+  --btn-num-active: #d6cfc2;
+  --btn-num-text: #2b2825;
+
+  --btn-op-bg: #3d3b38;
+  --btn-op-hover: #4d4b47;
+  --btn-op-active: #2b2a28;
+  --btn-op-text: #f4f1eb;
+  --btn-op-border: #2b2927;
+
+  --btn-fn-bg: #c5beb1;
+  --btn-fn-hover: #b5ad9e;
+  --btn-fn-active: #a39b8b;
+  --btn-fn-text: #2b2825;
+
+  --btn-danger-bg: #b84a39;
+  --btn-danger-hover: #c95745;
+  --btn-danger-text: #ffffff;
+
+  --btn-equals-bg: linear-gradient(135deg, #e67e22, #d35400);
+  --btn-equals-hover: linear-gradient(135deg, #f39c12, #e67e22);
+  --btn-equals-active: #ba4a00;
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+
+  --accent-color: #d35400;
+  --accent-glow: rgba(211, 84, 0, 0.25);
+  --badge-bg: #3a3835;
+  --badge-text: #76ff03;
+
+  --drawer-bg: #eae6de;
+  --drawer-border: #bab3a5;
+  --input-bg: #f4f1eb;
+  --input-border: #bab3a5;
+}
+

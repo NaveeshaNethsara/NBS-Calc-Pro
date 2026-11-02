@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-slate">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBS Calc Pro</title>
+  <meta name="description" content="NBS Calc Pro - High-precision modern calculator with standard, scientific, unit conversion, and programmer modes.">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-wrapper" id="appWrapper">
+    <!-- Main Calculator Card -->
+    <main class="calculator-card" role="application" aria-label="NBS Calc Pro">
+      
+      <!-- Header & Navigation -->
+      <header class="calc-header">
+        <div class="calc-top-bar">
+          <div class="brand-badge" title="NBS Calc Pro">
+            <img src="assets/logo.png" alt="NBS Logo" class="brand-logo-img">
+            <span class="brand-name">NBS CALC PRO</span>
+          </div>
+
+          <div class="quick-tools">
+            <!-- Theme Selector -->
+            <button class="icon-btn" id="themeBtn" aria-label="Toggle Theme" title="Switch Theme">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </button>
+
+            <!-- Sound Toggle -->
+            <button class="icon-btn" id="soundBtn" aria-label="Toggle Audio Feedback" title="Click Sounds (On/Off)">
+              <svg id="soundIconOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+              <svg id="soundIconOff" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </button>
+
+            <!-- Keyboard Shortcuts Info -->
+            <button class="icon-btn" id="shortcutsBtn" aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts (?)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </button>
+
+            <!-- History Toggle -->
+            <button class="icon-btn" id="historyToggleBtn" aria-label="Open Calculation History" title="History Tape (H)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span class="badge-dot" id="historyBadge" style="display:none;"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <nav class="mode-tabs" role="tablist" aria-label="Calculator Modes">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-mode="standard">Standard</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-mode="scientific">Scientific</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-mode="converter">Converter</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-mode="programmer">Programmer</button>
+        </nav>
+      </header>
+
+      <!-- Primary Display Screen (Standard / Scientific Modes) -->
+      <section class="calc-display" id="mainDisplaySection" aria-label="Calculator Display">
+        <div class="display-meta">
+          <div class="meta-tags">
+            <span class="meta-tag hidden" id="angleModeTag" title="Click to toggle DEG/RAD">DEG</span>
+            <span class="meta-tag hidden" id="memoryTag" title="Memory active">M</span>
+          </div>
+          <button class="copy-btn" id="copyResultBtn" aria-label="Copy Result" title="Copy result to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy</span>
+          </button>
+        </div>
+
+        <div class="expression-track" id="expressionTrack" aria-hidden="true">&nbsp;</div>
+        <div class="main-readout" id="mainReadout" aria-live="polite" role="status">0</div>
+      </section>
+
+      <!-- Memory Bar -->
+      <nav class="memory-bar" id="memoryBar" aria-label="Memory Register Controls">
+        <button class="mem-btn" data-action="mc" disabled id="btnMC">MC</button>
+        <button class="mem-btn" data-action="mr" disabled id="btnMR">MR</button>
+        <button class="mem-btn" data-action="m-plus">M+</button>
+        <button class="mem-btn" data-action="m-minus">M−</button>
+        <button class="mem-btn" data-action="ms">MS</button>
+      </nav>
+
+      <!-- Standard & Scientific Keypad Views -->
+      <div class="keypad-container" id="calcKeypadView">
+        <div class="scientific-layout" id="keypadGrid">
+          
+          <!-- Scientific Functions Subgrid (shown in scientific mode or wide view) -->
+          <div class="scientific-subgrid" id="scientificSubgrid" style="display: none;">
+            <button class="calc-btn btn-fn" data-fn="deg-rad" id="btnDegRad">RAD</button>
+            <button class="calc-btn btn-fn" data-fn="sin">sin</button>
+            <button class="calc-btn btn-fn" data-fn="cos">cos</button>
+            <button class="calc-btn btn-fn" data-fn="tan">tan</button>
+
+            <button class="calc-btn btn-fn" data-fn="asin">sin⁻¹</button>
+            <button class="calc-btn btn-fn" data-fn="acos">cos⁻¹</button>
+            <button class="calc-btn btn-fn" data-fn="atan">tan⁻¹</button>
+            <button class="calc-btn btn-fn" data-fn="pi">π</button>
+
+            <button class="calc-btn btn-fn" data-fn="ln">ln</button>
+            <button class="calc-btn btn-fn" data-fn="log">log</button>
+            <button class="calc-btn btn-fn" data-fn="exp">eˣ</button>
+            <button class="calc-btn btn-fn" data-fn="e">e</button>
+
+            <button class="calc-btn btn-fn" data-fn="pow">xʸ</button>
+            <button class="calc-btn btn-fn" data-fn="sqr">x²</button>
+            <button class="calc-btn btn-fn" data-fn="sqrt">√x</button>
+            <button class="calc-btn btn-fn" data-fn="fact">n!</button>
+
+            <button class="calc-btn btn-fn" data-fn="abs">|x|</button>
+            <button class="calc-btn btn-fn" data-fn="cbrt">∛x</button>
+            <button class="calc-btn btn-fn" data-fn="mod">mod</button>
+            <button class="calc-btn btn-fn" data-fn="inv">1/x</button>
+          </div>
+
+          <!-- Standard Keypad Subgrid -->
+          <div class="keypad-grid standard-grid" id="standardSubgrid">
+            <button class="calc-btn btn-danger" data-action="clear" aria-label="All Clear">AC</button>
+            <button class="calc-btn btn-fn" data-action="backspace" aria-label="Backspace">⌫</button>
+            <button class="calc-btn btn-fn" data-action="paren" aria-label="Parentheses">( )</button>
+            <button class="calc-btn btn-op" data-op="/" aria-label="Divide">÷</button>
+
+            <button class="calc-btn btn-num" data-num="7">7</button>
+            <button class="calc-btn btn-num" data-num="8">8</button>
+            <button class="calc-btn btn-num" data-num="9">9</button>
+            <button class="calc-btn btn-op" data-op="*" aria-label="Multiply">×</button>
+
+            <button class="calc-btn btn-num" data-num="4">4</button>
+            <button class="calc-btn btn-num" data-num="5">5</button>
+            <button class="calc-btn btn-num" data-num="6">6</button>
+            <button class="calc-btn btn-op" data-op="-" aria-label="Subtract">−</button>
+
+            <button class="calc-btn btn-num" data-num="1">1</button>
+            <button class="calc-btn btn-num" data-num="2">2</button>
+            <button class="calc-btn btn-num" data-num="3">3</button>
+            <button class="calc-btn btn-op" data-op="+" aria-label="Add">+</button>
+
+            <button class="calc-btn btn-fn" data-action="negate" aria-label="Plus Minus">±</button>
+            <button class="calc-btn btn-num" data-num="0">0</button>
+            <button class="calc-btn btn-num" data-num=".">.</button>
+            <button class="calc-btn btn-equals" data-action="evaluate" aria-label="Equals">=</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Unit Converter View (shown when Converter mode is active) -->
+      <div class="converter-container" id="converterView" style="display: none;">
+        <!-- Category chips -->
+        <div class="category-chips" id="converterCategories" role="tablist" aria-label="Unit Categories">
+          <button class="chip-btn active" data-cat="length">Length</button>
+          <button class="chip-btn" data-cat="mass">Weight</button>
+          <button class="chip-btn" data-cat="temperature">Temp</button>
+          <button class="chip-btn" data-cat="area">Area</button>
+          <button class="chip-btn" data-cat="speed">Speed</button>
+          <button class="chip-btn" data-cat="data">Data</button>
+          <button class="chip-btn" data-cat="time">Time</button>
+        </div>
+
+        <!-- From Unit Card -->
+        <div class="converter-card" id="converterFromCard">
+          <div class="converter-card-header">
+            <span class="converter-badge">FROM</span>
+            <button class="clear-btn" id="clearFromInputBtn" type="button" title="Reset to 0" aria-label="Reset value">Reset</button>
+          </div>
+
+          <div class="converter-input-wrapper">
+            <input type="number" id="converterFromInput" class="converter-input" value="1" step="any" placeholder="0" aria-label="From Value">
+          </div>
+
+          <div class="converter-select-wrapper">
+            <select id="converterFromSelect" class="converter-select" aria-label="From Unit"></select>
+            <span class="select-chevron" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Swap Direction Button -->
+        <div class="swap-divider">
+          <button class="swap-btn" id="converterSwapBtn" type="button" aria-label="Swap units" title="Swap From and To units">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="3" x2="7" y2="21"></line>
+              <polyline points="3 7 7 3 11 7"></polyline>
+              <line x1="17" y1="21" x2="17" y2="3"></line>
+              <polyline points="13 17 17 21 21 17"></polyline>
+            </svg>
+            <span>Swap</span>
+          </button>
+        </div>
+
+        <!-- To Unit Card -->
+        <div class="converter-card" id="converterToCard">
+          <div class="converter-card-header">
+            <span class="converter-badge">TO</span>
+            <button class="copy-btn" id="copyConverterBtn" type="button" aria-label="Copy Result" title="Copy converted result">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+
+          <div class="converter-input-wrapper">
+            <input type="number" id="converterToInput" class="converter-input" value="1000" step="any" placeholder="0" aria-label="To Value">
+          </div>
+
+          <div class="converter-select-wrapper">
+            <select id="converterToSelect" class="converter-select" aria-label="To Unit"></select>
+            <span class="select-chevron" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Live Conversion Rate / Formula summary footer -->
+        <div class="conversion-formula-bar" id="conversionFormulaBar">
+          <span class="formula-icon">ℹ</span>
+          <span class="formula-text" id="conversionFormula">1 Meters (m) = 0.001 Kilometers (km)</span>
+        </div>
+      </div>
+
+      <!-- Programmer Mode View (shown when Programmer mode is active) -->
+      <div class="programmer-container" id="programmerView" style="display: none;">
+        <!-- Base representation list -->
+        <div class="base-representation-list" id="baseRepList">
+          <div class="base-row" data-base="HEX">
+            <span class="base-label">HEX</span>
+            <span class="base-value" id="valHEX">0</span>
+          </div>
+          <div class="base-row active" data-base="DEC">
+            <span class="base-label">DEC</span>
+            <span class="base-value" id="valDEC">0</span>
+          </div>
+          <div class="base-row" data-base="OCT">
+            <span class="base-label">OCT</span>
+            <span class="base-value" id="valOCT">0</span>
+          </div>
+          <div class="base-row" data-base="BIN">
+            <span class="base-label">BIN</span>
+            <span class="base-value" id="valBIN">0000 0000 0000 0000 0000 0000 0000 0000</span>
+          </div>
+        </div>
+
+        <!-- Bit toggler grid -->
+        <div class="bit-toggle-wrapper">
+          <div class="bit-header-row">
+            <span>31</span>
+            <span>16</span>
+            <span>15</span>
+            <span>0</span>
+          </div>
+          <div class="bit-matrix" id="bitMatrix">
+            <!-- 32 bit cells injected via JS -->
+          </div>
+        </div>
+
+        <!-- Programmer Controls: Word size & bitwise -->
+        <div class="programmer-controls">
+          <div class="converter-select-wrapper">
+            <select id="wordSizeSelect" class="converter-select" aria-label="Word Size">
+              <option value="DWORD" selected>DWORD (32-bit)</option>
+              <option value="QWORD">QWORD (64-bit)</option>
+              <option value="WORD">WORD (16-bit)</option>
+              <option value="BYTE">BYTE (8-bit)</option>
+            </select>
+            <span class="select-chevron" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Bitwise Operations Row -->
+        <div class="hex-keys-grid">
+          <button class="calc-btn btn-fn" data-prog-op="AND">AND</button>
+          <button class="calc-btn btn-fn" data-prog-op="OR">OR</button>
+          <button class="calc-btn btn-fn" data-prog-op="XOR">XOR</button>
+          <button class="calc-btn btn-fn" data-prog-op="NOT">NOT</button>
+          <button class="calc-btn btn-fn" data-prog-op="LSH">&lt;&lt;</button>
+          <button class="calc-btn btn-fn" data-prog-op="RSH">&gt;&gt;</button>
+        </div>
+
+        <!-- Hex keys row (A-F) -->
+        <div class="hex-keys-grid" id="hexKeysGrid">
+          <button class="calc-btn btn-fn" data-num="A">A</button>
+          <button class="calc-btn btn-fn" data-num="B">B</button>
+          <button class="calc-btn btn-fn" data-num="C">C</button>
+          <button class="calc-btn btn-fn" data-num="D">D</button>
+          <button class="calc-btn btn-fn" data-num="E">E</button>
+          <button class="calc-btn btn-fn" data-num="F">F</button>
+        </div>
+      </div>
+
+      <!-- Slide-out Calculation History Drawer -->
+      <aside class="history-drawer" id="historyDrawer" aria-label="Calculation History Tape">
+        <div class="history-header">
+          <h3>History Tape</h3>
+          <button class="icon-btn" id="closeHistoryBtn" aria-label="Close History">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="history-list" id="historyList">
+          <p class="history-empty">No calculations recorded yet.</p>
+        </div>
+
+        <div class="history-footer">
+          <button class="calc-btn btn-fn" id="exportHistoryBtn" title="Export as CSV or Text">Export</button>
+          <button class="calc-btn btn-danger" id="clearHistoryBtn" title="Clear all history">Clear All</button>
+        </div>
+      </aside>
+
+    </main>
+  </div>
+
+  <!-- Keyboard Shortcuts Cheat-sheet Modal -->
+  <div class="modal-backdrop" id="shortcutsModal" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="shortcutsTitle">Keyboard Shortcuts</h3>
+        <button class="icon-btn" id="closeShortcutsBtn" aria-label="Close Modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="shortcut-group">
+        <h4>Navigation & Actions</h4>
+        <div class="shortcut-list">
+          <div class="shortcut-item"><span>Calculate / Evaluate</span><kbd>Enter</kbd> / <kbd>=</kbd></div>
+          <div class="shortcut-item"><span>All Clear</span><kbd>Escape</kbd> / <kbd>c</kbd></div>
+          <div class="shortcut-item"><span>Delete Last Digit</span><kbd>Backspace</kbd></div>
+          <div class="shortcut-item"><span>Copy Result</span><kbd>Ctrl+C</kbd></div>
+          <div class="shortcut-item"><span>Open History</span><kbd>h</kbd></div>
+          <div class="shortcut-item"><span>Angle DEG/RAD</span><kbd>r</kbd></div>
+          <div class="shortcut-item"><span>This Help Screen</span><kbd>?</kbd></div>
+        </div>
+      </div>
+
+      <div class="shortcut-group">
+        <h4>Operators & Functions</h4>
+        <div class="shortcut-list">
+          <div class="shortcut-item"><span>Add / Subtract</span><kbd>+</kbd> / <kbd>-</kbd></div>
+          <div class="shortcut-item"><span>Multiply / Divide</span><kbd>*</kbd> / <kbd>/</kbd></div>
+          <div class="shortcut-item"><span>Exponentiation</span><kbd>^</kbd></div>
+          <div class="shortcut-item"><span>Percentage / Modulo</span><kbd>%</kbd></div>
+          <div class="shortcut-item"><span>Parentheses</span><kbd>(</kbd> <kbd>)</kbd></div>
+          <div class="shortcut-item"><span>Factorial</span><kbd>!</kbd></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Application Script (Standalone bundle works with both file:// and http://) -->
+  <script src="js/bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "nbs-calc-pro",
+  "version": "1.0.0",
+  "description": "NBS Calc Pro - High-precision calculator application with standard, scientific, unit conversion, and programmer modes.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "calculator",
+    "scientific-calculator",
+    "unit-converter",
+    "programmer-calculator",
+    "vanilla-js"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+
