@@ -957,6 +957,19 @@
       this.initProgrammer();
       this.initHistory();
       this.updateDisplay();
+
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pTheme = urlParams.get('theme');
+        if (pTheme && this.themes.includes(pTheme)) {
+          this.currentTheme = pTheme;
+          document.documentElement.setAttribute('data-theme', this.currentTheme);
+        }
+        const pMode = urlParams.get('mode');
+        if (pMode) {
+          this.setMode(pMode);
+        }
+      } catch {}
     }
 
     initDOM() {
