@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBS Calc Pro - Video Reel Showcase</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #080b12;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      overflow-x: hidden;
+    }
+
+    .player-container {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      background: #030508;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.2);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 2.5rem;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    /* Background ambient blur */
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: blur(28px) brightness(0.35);
+      transform: scale(1.15);
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      width: 100%;
+      max-width: 780px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 30px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+      50% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 40%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: #cbd5e1;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .preview-frame {
+      width: 100%;
+      max-height: 320px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      transform: perspective(1000px) rotateX(4deg);
+      transition: transform 0.5s ease;
+    }
+
+    .preview-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .logo-pulse {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
+      animation: spin-tilt 6s infinite linear;
+    }
+
+    @keyframes spin-tilt {
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.06) rotate(6deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    /* Player Controls */
+    .controls-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .btn-play {
+      background: #38bdf8;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: #0b0f19;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-play:hover {
+      transform: scale(1.1);
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      transition: width 0.1s linear;
+    }
+
+    .time-label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-family: monospace;
+    }
+
+    .cta-github {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      padding: 0.65rem 1.4rem;
+      border-radius: 30px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cta-github:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="player-container" id="player">
+    
+    <!-- Slide 0: Intro Brand -->
+    <div class="slide active" data-duration="3500">
+      <div class="slide-bg" style="background-image: url('assets/logo.png');"></div>
+      <div class="slide-content">
+        <img src="assets/logo.png" alt="NBS Logo" class="logo-pulse">
+        <span class="badge">Open Source Showcase</span>
+        <h1 class="hero-title">NBS CALC PRO</h1>
+        <p class="hero-subtitle">The High-Precision, Zero-Dependency Modern Calculator & Unit Converter Suite.</p>
+      </div>
+    </div>
+
+    <!-- Slide 1: Scientific Engine -->
+    <div class="slide" data-duration="4000">
+      <div class="slide-bg" style="background-image: url('assets/screenshots/screenshot-scientific.png');"></div>
+      <div class="slide-content">
+        <span class="badge">Mathematical Precision</span>
+        <h2 class="hero-title" style="font-size: 2.2rem;">Custom AST & Shunting-Yard Engine</h2>
+        <div class="preview-frame">
+          <img src="assets/screenshots/screenshot-scientific.png" alt="Scientific Mode">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Unit Converter -->
+    <div class="slide" data-duration="4000">
+      <div class="slide-bg" style="background-image: url('assets/screenshots/screenshot-converter.png');"></div>
+      <div class="slide-content">
+        <span class="badge">Redesigned Converter</span>
+        <h2 class="hero-title" style="font-size: 2.2rem;">7 Unit Categories & Live Formula Sync</h2>
+        <div class="preview-frame">
+          <img src="assets/screenshots/screenshot-converter.png" alt="Unit Converter Mode">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Programmer Mode -->
+    <div class="slide" data-duration="4000">
+      <div class="slide-bg" style="background-image: url('assets/screenshots/screenshot-programmer.png');"></div>
+      <div class="slide-content">
+        <span class="badge">Developer Tools</span>
+        <h2 class="hero-title" style="font-size: 2.2rem;">Live 32-Bit Matrix & HEX/DEC/OCT/BIN</h2>
+        <div class="preview-frame">
+          <img src="assets/screenshots/screenshot-programmer.png" alt="Programmer Mode">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Multi-Theme & Web Audio -->
+    <div class="slide" data-duration="4000">
+      <div class="slide-bg" style="background-image: url('assets/screenshots/screenshot-cyberpunk.png');"></div>
+      <div class="slide-content">
+        <span class="badge">Cyberpunk, Dark Slate & Swiss Themes</span>
+        <h2 class="hero-title" style="font-size: 2.2rem;">Web Audio API Tactile Mechanical Feedback</h2>
+        <div class="preview-frame">
+          <img src="assets/screenshots/screenshot-cyberpunk.png" alt="Cyberpunk Theme">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Outro Call to Action -->
+    <div class="slide" data-duration="4500">
+      <div class="slide-bg" style="background-image: url('assets/logo.png');"></div>
+      <div class="slide-content">
+        <img src="assets/logo.png" alt="NBS Logo" style="width: 70px; height: 70px; border-radius: 50%;">
+        <h2 class="hero-title" style="font-size: 2.3rem;">Build, Calculate & Convert Faster.</h2>
+        <p class="hero-subtitle">100% Free & Open Source on GitHub</p>
+        <a href="https://github.com/NaveeshaNethsara/NBS-Calc-Pro" target="_blank" class="cta-github">
+          <span>Explore on GitHub</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+      <button class="btn-play" id="playBtn" aria-label="Play/Pause">⏸</button>
+      <div class="progress-track" id="progressTrack">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="time-label" id="timeLabel">00:00 / 00:24</span>
+    </div>
+
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const playBtn = document.getElementById('playBtn');
+    const progressFill = document.getElementById('progressFill');
+    const timeLabel = document.getElementById('timeLabel');
+    const progressTrack = document.getElementById('progressTrack');
+
+    let currentSlide = 0;
+    let isPlaying = true;
+    let slideTimer = null;
+    let progressInterval = null;
+    let startTime = Date.now();
+
+    const slideDurations = Array.from(slides).map(s => parseInt(s.dataset.duration, 10));
+    const totalDuration = slideDurations.reduce((a, b) => a + b, 0);
+
+    function getElapsedBefore(index) {
+      let sum = 0;
+      for (let i = 0; i < index; i++) sum += slideDurations[i];
+      return sum;
+    }
+
+    function showSlide(index) {
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    function playReel() {
+      if (!isPlaying) return;
+      showSlide(currentSlide);
+
+      clearTimeout(slideTimer);
+      slideTimer = setTimeout(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        if (currentSlide === 0) {
+          startTime = Date.now();
+        }
+        playReel();
+      }, slideDurations[currentSlide]);
+    }
+
+    function updateProgress() {
+      if (!isPlaying) return;
+      const elapsedCurrent = Date.now() - startTime;
+      const pct = Math.min((elapsedCurrent / totalDuration) * 100, 100);
+      progressFill.style.width = pct + '%';
+
+      const sec = Math.floor(elapsedCurrent / 1000) % Math.floor(totalDuration / 1000);
+      const totalSec = Math.floor(totalDuration / 1000);
+      timeLabel.textContent = `00:${String(sec).padStart(2, '0')} / 00:${String(totalSec).padStart(2, '0')}`;
+
+      if (pct >= 100) {
+        startTime = Date.now();
+      }
+    }
+
+    playBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      playBtn.textContent = isPlaying ? '⏸' : '▶';
+      if (isPlaying) {
+        playReel();
+      } else {
+        clearTimeout(slideTimer);
+      }
+    });
+
+    playReel();
+    setInterval(updateProgress, 100);
+  </script>
+</body>
+</html>
